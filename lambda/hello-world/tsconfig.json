@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2020",               // Keep this aligned with your Lambda runtime (e.g., Node 18.x)
+    "strict": true,
+    "preserveConstEnums": true,
+    // "noEmit": true,                // REMOVE THIS LINE
+    "outDir": "./dist",               // ADD: Specify output directory
+    "rootDir": "./src",               // ADD: Specify source directory (adjust if your code is elsewhere)
+    "sourceMap": true,                // CHANGE/ADD: Often useful for debugging (optional)
+    "module": "CommonJS",             // CHANGE: Use CommonJS for standard Lambda runtime
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,             // Keep this true
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src/**/*"                        // ADD: Explicitly include ONLY your source files (adjust path if needed)
+  ],
+  "exclude": [
+    "node_modules",                   // Keep excluding node_modules
+    "**/*.test.ts",                   // Exclude tests
+    "dist"                            // Exclude the output directory itself
+  ]
+}
