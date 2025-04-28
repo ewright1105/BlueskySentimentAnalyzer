@@ -10,30 +10,21 @@
 6. On the create new token screen, provide a note, select **repo** and **admin:repo\_hook**, then click **Generate token**.
 7. Copy the generated token and save it securely for later use.
 
-## Create Key Pair (AWS EC2)
-
-1. Navigate to the AWS EC2 Console.
-2. On the left-hand side menu, select **Key pairs**.
-3. Click **Create key pair**, provide a name, ensure type is **RSA**, and format is **.pem**, then press **Create**.
-4. The **.pem** file will automatically download—keep this file secure as you'll need it later.
-
-## Connect to the Instance from the AMI Image
-
-1. We shared an AMI with you. Click the [provided link](https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#ImageDetails:imageId=ami-05d95faecb2b6909b) to navigate to it.
-2. Click **Launch instance from AMI**.
-3. Give your instance a name, select the key pair you created earlier, ensure a VPC is selected, and click **Launch**.
-4. After launching, click **Connect to your instance**.
-5. On the **SSH client** tab, copy the connection string at the bottom.
-
 ### Connecting Using CloudShell
 
-1. Navigate to the CloudShell console, ensuring you're in the **us-east-1** region.
-2. At the top right, click **Actions** and select **Upload file**, then upload the previously downloaded `.pem` file.
-3. Run the following command in CloudShell:
-   ```bash
-   chmod 600 [Your key name].pem
-   ```
-4. Paste the SSH command copied earlier, changing `root` to `ec2-user`, and press **Enter**. Confirm the connection by entering `yes` when prompted.
+1. Navigate to the CloudShell console, ensuring you're in the **us-east-1** region. If not on **us-east-1**, just keep that in mind as you will need to modify main.tf later on.
+2. At the top right, click **Actions** and select **Upload file**, and upload the zip file in the root of this repository. 
+3. Unzip the file.This will unpack all the necessary code to build the app, including the main.tf file for the Terraform and all the code/packages for the Lambda functions that make it run. You may remove the original zip file and the **__MACOSX** directory if desired.
+4. Next, install terraform using the following commands in order:
+```
+sudo yum install -y yum-utils
+```
+```
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+```
+```
+sudo yum -y install terraform
+```
 
 ## Configure AWS & Run Terraform
 
@@ -42,7 +33,7 @@
    ```bash
    aws configure
    ```
-3. Enter your AWS credentials and set region as `us-east-1`. Skip the output by pressing **Enter**.
+3. Enter your AWS credentials and set region as `us-east-1`. Skip the output by pressing **Enter**. (_NOTE: IF YOU WISH TO BUILD ON ANOTHER REGION, OPEN MAIN.TF AND MODIFY THE REGION ON LINE 37_)
 4. Initialize Terraform by running:
    ```bash
    terraform init
